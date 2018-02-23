@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnEarnOption2.setOnClickListener(this);
         btnEarnOption3.setOnClickListener(this);
 
+        //Banner Ad Area
         mBannerAd = findViewById(R.id.adView);
+        mBannerAd.loadAd(requestAd());
         viewMyCoins();
 
         //Interstitial Ad Area

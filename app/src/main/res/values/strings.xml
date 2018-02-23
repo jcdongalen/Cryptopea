@@ -6,7 +6,8 @@
     <string name="FACEBOOK_APP_ID">177448152981840</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">[ACCOUNT_KIT_CLIENT_TOKEN]</string>
 
-    <string name="adMob_ID_Banner">ca-app-pub-3703727949107398/6199056352</string>
+    <string name="APP_ID">ca-app-pub-3703727949107398~8246226074</string>
+    <string name="Cryptopea_BANNER_ID">ca-app-pub-3703727949107398/6199056352</string>
     <string name="adMob_ID_Interstitial">ca-app-pub-3703727949107398/6098095956</string>
     <string name="adMob_ID_RewardedViedo"></string>
 </resources>

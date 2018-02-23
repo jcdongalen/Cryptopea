@@ -22,7 +22,7 @@ public class CryptopeaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         GenerateHashKey();
-        MobileAds.initialize(this, "ca-app-pub-3703727949107398~8246226074");
+        MobileAds.initialize(this, getString(R.string.APP_ID));
     }
 
     private void GenerateHashKey(){

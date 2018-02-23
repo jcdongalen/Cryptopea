@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRewarded(RewardItem rewardItem) {
         Toast.makeText(this, "You received " + rewardItem.getAmount() + " " + rewardItem.getType() + ".", Toast.LENGTH_SHORT).show();
-        mySatoshis = +rewardItem.getAmount();
+        mySatoshis += rewardItem.getAmount();
     }
 
     @Override

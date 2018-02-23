@@ -1,5 +1,6 @@
 package com.github.jc.cryptopea.Activities;
 
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.github.jc.cryptopea.BuildConfig;
 import com.github.jc.cryptopea.R;
 import com.github.jc.cryptopea.Utils.AdvertisementFactory;
+import com.github.jc.cryptopea.Utils.SharedPreferencesFactory;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -31,21 +33,23 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RewardedVideoAdListener {
 
     private static final String TestDeviceID = AdRequest.DEVICE_ID_EMULATOR;
-    private static final int BUTTON_COUNTDOWN_TIMER = 5000;
 
     private int mySatoshis = 0;
 
     private InterstitialAd mInterstitialAd;
     private RewardedVideoAd mRewardedVideoAd;
-    private AdView mBannerAd;
 
     private Button btnEarnOption1, btnEarnOption2, btnEarnOption3;
     private TextView tvEarnings;
+
+    private SharedPreferencesFactory sharedPreferencesFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferencesFactory = new SharedPreferencesFactory(this);
 
         tvEarnings = findViewById(R.id.tvTotalEarnings);
 
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnEarnOption3.setOnClickListener(this);
 
         //Banner Ad Area
-        mBannerAd = findViewById(R.id.adView);
+        AdView mBannerAd = findViewById(R.id.adView);
         mBannerAd.loadAd(requestAd());
         viewMyCoins();
 
@@ -70,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
+                mySatoshis += 15;
+                viewMyCoins();
                 mInterstitialAd.loadAd(requestAd());
             }
 
@@ -115,6 +121,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnEarnOption1:
+                mySatoshis += 10;
+                saveMyCoins();
+                viewMyCoins();
                 break;
             case R.id.btnEarnOption2:
                 if (btnEarnOption2.getText().toString().equalsIgnoreCase("Retry")) {
@@ -147,27 +156,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void viewMyCoins() {
+        if (sharedPreferencesFactory.getPreferenceByName("Account") != null) {
+            SharedPreferences sharedPreferences = sharedPreferencesFactory.getPreferenceByName("Account");
+            mySatoshis = sharedPreferences.getInt("mySatoshis", 0);
+        }
+
         tvEarnings.setText("Total Earnings:\n" + mySatoshis + " Satohis");
+    }
+
+    private void saveMyCoins() {
+        if (sharedPreferencesFactory.getPreferenceByName("Account") != null) {
+            SharedPreferences sharedPreferences = sharedPreferencesFactory.getPreferenceByName("Account");
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("mySatoshis", mySatoshis);
+            editor.commit();
+        }
     }
 
     //TODO: Handle RewardedAdListener
     @Override
     public void onRewardedVideoAdLoaded() {
+        Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
         btnEarnOption3.setEnabled(true);
     }
 
     @Override
     public void onRewardedVideoAdOpened() {
-
+        Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoStarted() {
-
+        Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdClosed() {
+        Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
         viewMyCoins();
         loadRewardedVideoAd();
     }
@@ -176,15 +201,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onRewarded(RewardItem rewardItem) {
         Toast.makeText(this, "You received " + rewardItem.getAmount() + " " + rewardItem.getType() + ".", Toast.LENGTH_SHORT).show();
         mySatoshis += rewardItem.getAmount();
+        saveMyCoins();
     }
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
+        Toast.makeText(this, "onRewardedVideoAdLeftApplication", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
+        Toast.makeText(this, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
         btnEarnOption3.setText("Retry");
         btnEarnOption3.setEnabled(true);
     }

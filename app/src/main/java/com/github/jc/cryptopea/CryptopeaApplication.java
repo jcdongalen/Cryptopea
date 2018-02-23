@@ -1,6 +1,7 @@
 package com.github.jc.cryptopea;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -18,7 +19,9 @@ import java.security.NoSuchAlgorithmException;
 
 public class CryptopeaApplication extends Application {
 
-    @Override
+    public static SharedPreferences sharedPreferences;
+    public static SharedPreferences.Editor sharedPrefEditor;
+
     public void onCreate() {
         super.onCreate();
         GenerateHashKey();

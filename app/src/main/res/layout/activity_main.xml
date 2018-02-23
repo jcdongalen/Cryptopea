@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.github.jc.cryptopea.Activities.MainActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/tvTotalEarnings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:text="Total earnings:\n0.00000 BTC"/>
+
+        <Button
+            android:id="@+id/btnEarnOption1"
+            android:enabled="false"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Earn 10 satoshis"
+            android:layout_marginBottom="10dp"
+            />
+
+        <Button
+            android:id="@+id/btnEarnOption2"
+            android:enabled="false"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Earn 15 satoshis"
+            android:layout_marginBottom="10dp"
+            />
+
+        <Button
+            android:id="@+id/btnEarnOption3"
+            android:enabled="false"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Earn 20 satoshis"
+            />
+
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3703727949107398/6199056352" />
+
+</RelativeLayout>

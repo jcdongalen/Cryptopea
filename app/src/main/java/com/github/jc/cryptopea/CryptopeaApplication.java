@@ -25,7 +25,7 @@ public class CryptopeaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         GenerateHashKey();
-        MobileAds.initialize(this, getString(R.string.APP_ID));
+        MobileAds.initialize(this, BuildConfig.ADMOB_APP_ID);
     }
 
     private void GenerateHashKey(){

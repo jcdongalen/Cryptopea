@@ -23,7 +23,6 @@
 
         <Button
             android:id="@+id/btnEarnOption1"
-            android:enabled="false"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="Earn 10 satoshis"
@@ -32,7 +31,6 @@
 
         <Button
             android:id="@+id/btnEarnOption2"
-            android:enabled="false"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="Earn 15 satoshis"
@@ -41,7 +39,6 @@
 
         <Button
             android:id="@+id/btnEarnOption3"
-            android:enabled="false"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="Earn 20 satoshis"

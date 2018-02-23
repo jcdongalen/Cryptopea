@@ -8,6 +8,6 @@
 
     <string name="APP_ID">ca-app-pub-3703727949107398~8246226074</string>
     <string name="Cryptopea_BANNER_ID">ca-app-pub-3703727949107398/6199056352</string>
-    <string name="adMob_ID_Interstitial">ca-app-pub-3703727949107398/6098095956</string>
-    <string name="adMob_ID_RewardedViedo"></string>
+    <string name="Cryptopea_INTERSTITAL_ID">ca-app-pub-3703727949107398/6098095956</string>
+    <string name="Cryptopea_REWARDEDVIDEO_ID">ca-app-pub-3703727949107398/2821567059</string>
 </resources>

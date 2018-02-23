@@ -27,21 +27,30 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "0.011"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
             buildConfigField("String", "ENVIRONMENT", "\"test\"")
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3703727949107398~8246226074\"")
+            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3703727949107398/6098095956\"")
+            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3703727949107398/2821567059\"")
         }
         debugLive {
-            buildConfigField("String", "ENVIRONMENT", "\"testlive\"")
             signingConfig signingConfigs.debug
+            buildConfigField("String", "ENVIRONMENT", "\"testlive\"")
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3703727949107398~8246226074\"")
+            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3703727949107398/6098095956\"")
+            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3703727949107398/2821567059\"")
         }
         release {
             signingConfig signingConfigs.release
             buildConfigField("String", "ENVIRONMENT", "\"live\"")
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3703727949107398~8246226074\"")
+            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3703727949107398/6098095956\"")
+            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3703727949107398/2821567059\"")
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

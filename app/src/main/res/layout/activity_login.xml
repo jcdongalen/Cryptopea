@@ -37,11 +37,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="10sp"
-                    android:maxHeight="200sp"
-                    android:maxWidth="200sp"
-                    android:minHeight="140sp"
-                    android:minWidth="140sp"
+                    android:maxHeight="150sp"
+                    android:maxWidth="150sp"
+                    android:minHeight="100sp"
+                    android:minWidth="100sp"
                     android:src="@drawable/ic_cryptopea_logo" />
 
                 <TextView
@@ -51,18 +50,18 @@
                     android:fontFamily="@font/acme"
                     android:text="Login to your account:"
                     android:textColor="@android:color/black"
+                    android:visibility="gone"
                     android:textSize="16sp" />
 
-                <android.support.design.widget.TextInputLayout
+                <!--<android.support.design.widget.TextInputLayout
                     android:id="@+id/til_username"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content">-->
 
                     <EditText
                         android:id="@+id/etUserName"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
                         android:drawablePadding="5dip"
                         android:drawableStart="@drawable/ic_account_box"
                         android:drawableTint="@color/colorPrimaryDark"
@@ -72,18 +71,17 @@
                         android:textColorHint="@android:color/darker_gray"
                         android:textStyle="normal" />
 
-                </android.support.design.widget.TextInputLayout>
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <android.support.design.widget.TextInputLayout
+                <!--<android.support.design.widget.TextInputLayout
                     android:id="@+id/til_password"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content">-->
 
                     <EditText
                         android:id="@+id/etPassword"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
                         android:drawablePadding="5dip"
                         android:drawableStart="@drawable/ic_lock"
                         android:drawableTint="@color/colorPrimaryDark"
@@ -93,7 +91,7 @@
                         android:textColorHint="@android:color/darker_gray"
                         android:textStyle="normal" />
 
-                </android.support.design.widget.TextInputLayout>
+                <!--</android.support.design.widget.TextInputLayout>-->
 
                 <TextView
                     android:id="@+id/tvForgotPassword"

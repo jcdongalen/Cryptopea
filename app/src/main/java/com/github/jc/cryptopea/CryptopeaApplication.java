@@ -19,9 +19,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class CryptopeaApplication extends Application {
 
-    public static SharedPreferences sharedPreferences;
-    public static SharedPreferences.Editor sharedPrefEditor;
-
     public void onCreate() {
         super.onCreate();
         GenerateHashKey();

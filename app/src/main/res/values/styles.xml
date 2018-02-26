@@ -10,6 +10,14 @@
         <item name="android:textColorPrimary">@color/cardview_light_background</item>
     </style>
 
+    <style name="CryptopeaAppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/Default_Button</item>
+        <item name="android:textColorPrimary">@color/cardview_light_background</item>
+    </style>
+
     <style name="Default_EditText" parent="@android:style/Widget.EditText">
         <item name="android:textColor">#FFF</item>
         <item name="android:textColorHint">#FFF</item>

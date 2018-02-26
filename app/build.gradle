@@ -26,7 +26,7 @@ android {
         applicationId "com.github.jc.cryptopea"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 1
+        versionCode 2
         versionName "0.011"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -35,24 +35,31 @@ android {
             signingConfig signingConfigs.debug
             buildConfigField("String", "ENVIRONMENT", "\"test\"")
             buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3703727949107398~8246226074\"")
-            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3703727949107398/6098095956\"")
-            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3703727949107398/2821567059\"")
+            buildConfigField("String", "BANNER_AD_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
+            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
+            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3940256099942544/5224354917\"")
+            buildConfigField("String", "REWARDEDVIDEO2_AD_ID", "\"ca-app-pub-3940256099942544/5224354917\"")
+
         }
         debugLive {
             signingConfig signingConfigs.debug
             buildConfigField("String", "ENVIRONMENT", "\"testlive\"")
             buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3703727949107398~8246226074\"")
-            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3703727949107398/6098095956\"")
-            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3703727949107398/2821567059\"")
+            buildConfigField("String", "BANNER_AD_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
+            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
+            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3940256099942544/5224354917\"")
+            buildConfigField("String", "REWARDEDVIDEO2_AD_ID", "\"ca-app-pub-3703727949107398/8074372669\"")
         }
         release {
             signingConfig signingConfigs.release
-            buildConfigField("String", "ENVIRONMENT", "\"live\"")
-            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3703727949107398~8246226074\"")
-            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3703727949107398/6098095956\"")
-            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3703727949107398/2821567059\"")
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "ENVIRONMENT", "\"live\"")
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3703727949107398/6199056352\"")
+            buildConfigField("String", "BANNER_AD_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
+            buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3703727949107398/6098095956\"")
+            buildConfigField("String", "REWARDEDVIDEO_AD_ID", "\"ca-app-pub-3703727949107398/2821567059\"")
+            buildConfigField("String", "REWARDEDVIDEO2_AD_ID", "\"ca-app-pub-3703727949107398/8074372669\"")
         }
     }
 }

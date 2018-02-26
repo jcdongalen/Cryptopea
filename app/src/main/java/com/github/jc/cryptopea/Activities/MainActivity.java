@@ -3,7 +3,6 @@ package com.github.jc.cryptopea.Activities;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.jc.cryptopea.BuildConfig;
 import com.github.jc.cryptopea.R;
@@ -47,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int COUNTDOWN_INTERVAL = 1000;
     private static final int EtheriumRefresh_MAXTIME = 1000 * 60 * 10;
 
-    private int mySatoshis = 0;
-    private double ethPrice = 0.0, ethInterstitialReward = 0.0, ethRewardedVideoReward = 0.0;
+    private int myEther = 0;
+    private float ethPrice = 0.0f, ethInterstitialReward = 0.0f, ethRewardedVideoReward = 0.0f;
 
     private InterstitialAd mInterstitialAd;
     private RewardedVideoAd mRewardedVideoAd;
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void onFinish() {
-            enableButton(btnEarnOption1, getResources().getString(R.string.earning_two));
+            enableButton(btnEarnOption1, String.format(getResources().getString(R.string.earning_ether), ethInterstitialReward));
         }
     };
 
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void onFinish() {
-            enableButton(btnEarnOption2, getResources().getString(R.string.earning_three));
+            enableButton(btnEarnOption2, String.format(getResources().getString(R.string.earning_ether), String.valueOf(ethRewardedVideoReward)));
         }
     };
 
@@ -144,11 +141,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
-                int rewardedSatoshi = (15 + mConstants.getRandomInt(5, 0));
                 Earning1CountdownTimer.start();
-                mySatoshis += rewardedSatoshi;
+                myEther += ethInterstitialReward;
                 mRinger.start();
-                Toast.makeText(MainActivity.this, "You have received " + rewardedSatoshi + " satoshi's.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "You have received " + String.valueOf(ethInterstitialReward) + " ether.", Toast.LENGTH_SHORT).show();
                 viewMyCoins();
             }
 
@@ -156,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onAdLoaded() {
                 Toast.makeText(MainActivity.this, "Interstitial Ad is now loaded.", Toast.LENGTH_SHORT).show();
                 super.onAdLoaded();
-                enableButton(btnEarnOption1, getResources().getString(R.string.earning_two));
+                enableButton(btnEarnOption1, String.format(getResources().getString(R.string.earning_ether), String.valueOf(ethInterstitialReward)));
             }
 
             @Override
@@ -174,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onRewardedVideoAdLoaded() {
                 Log.wtf("RewardedVideoAd", "onRewardedVideoAdLoaded Method");
-                enableButton(btnEarnOption2, getResources().getString(R.string.earning_three));
+                enableButton(btnEarnOption2, String.format(getResources().getString(R.string.earning_ether), String.valueOf(ethRewardedVideoReward)));
             }
 
             @Override
@@ -196,9 +192,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onRewarded(RewardItem rewardItem) {
                 Log.wtf("RewardedVideoAd", "onRewarded Method");
-                int rewardedSatoshi = rewardItem.getAmount() + mConstants.getRandomInt(5, 0);
-                Toast.makeText(MainActivity.this, "You received " + rewardedSatoshi + " " + rewardItem.getType() + ".", Toast.LENGTH_SHORT).show();
-                mySatoshis += rewardedSatoshi;
+                Toast.makeText(MainActivity.this, "You received " + ethRewardedVideoReward + " " + rewardItem.getType() + ".", Toast.LENGTH_SHORT).show();
+                myEther += ethRewardedVideoReward;
                 saveMyCoins();
                 mRinger.start();
             }
@@ -277,16 +272,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void viewMyCoins() {
         if (sharedPreferencesFactory.getPreferenceByName("Account") != null) {
             SharedPreferences sharedPreferences = sharedPreferencesFactory.getPreferenceByName("Account");
-            mySatoshis = sharedPreferences.getInt("mySatoshis", 0);
+            myEther = sharedPreferences.getInt("myEther", 0);
         }
 
-        tvEarnings.setText("Total Earnings:\n" + mySatoshis + " Satohis");
+        tvEarnings.setText("Total Earnings:\n" + myEther + " Satohis");
     }
 
     private void saveMyCoins() {
         SharedPreferences sharedPreferences = sharedPreferencesFactory.getPreferenceByName("Account");
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("mySatoshis", mySatoshis);
+        editor.putInt("myEther", myEther);
         editor.apply();
     }
 
@@ -313,9 +308,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             JSONObject data = response.getJSONObject("data");
                             JSONObject rates = data.getJSONObject("rates");
                             String EthPriceinPHP = rates.getString("PHP");
-                            ethPrice = Double.parseDouble(EthPriceinPHP);
+                            ethPrice = Float.parseFloat(EthPriceinPHP);
                             String finalEthPrice = "Ethereum: Php " + mConstants.currencyFormatter(ethPrice);
                             tvEtherPrice.setText(finalEthPrice);
+
+                            ethInterstitialReward = 0.01f / ethPrice;
+                            ethRewardedVideoReward = 0.02f / ethPrice;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

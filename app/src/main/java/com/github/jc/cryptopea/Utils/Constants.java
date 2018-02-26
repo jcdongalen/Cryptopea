@@ -26,7 +26,7 @@ public class Constants {
         return new Random().nextInt((max - min) + 1) + min;
     }
 
-    public String currencyFormatter(double val){
+    public String currencyFormatter(float val){
         return String.format(Locale.getDefault(), "%,.2f", val);
     }
 }

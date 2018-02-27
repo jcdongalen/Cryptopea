@@ -1,330 +1,148 @@
 package com.github.jc.cryptopea.Activities;
 
-import android.content.SharedPreferences;
-import android.media.MediaPlayer;
-import android.os.CountDownTimer;
+import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.github.jc.cryptopea.BuildConfig;
+import com.github.jc.cryptopea.Fragments.Dashboard;
+import com.github.jc.cryptopea.Fragments.MyProfile;
+import com.github.jc.cryptopea.Fragments.Reward;
 import com.github.jc.cryptopea.R;
-import com.github.jc.cryptopea.Utils.Constants;
-import com.github.jc.cryptopea.Utils.SharedPreferencesFactory;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener {
 
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private static final String TestDeviceID = AdRequest.DEVICE_ID_EMULATOR;
-    private static final int Earning1_MAXTIME = 1000 * 60 * 2;
-    private static final int Earning2_MAXTIME = 1000 * 60 * 5;
-    private static final int COUNTDOWN_INTERVAL = 1000;
-    private static final int EtheriumRefresh_MAXTIME = 1000 * 60 * 10;
-
-    private int myEther = 0;
-    private float ethPrice = 0.0f, ethInterstitialReward = 0.0f, ethRewardedVideoReward = 0.0f;
-
-    private InterstitialAd mInterstitialAd;
-    private RewardedVideoAd mRewardedVideoAd;
-
-    private Button btnEarnOption1, btnEarnOption2, btnEarnOption3;
-    private TextView tvEarnings, tvEtherPrice;
-
-    private MediaPlayer mRinger;
-
-    private SharedPreferencesFactory sharedPreferencesFactory;
-    private Constants mConstants;
-    private RequestQueue mRequestQueue;
-
-    private CountDownTimer Earning1CountdownTimer = new CountDownTimer(Earning1_MAXTIME, COUNTDOWN_INTERVAL) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-            disableButton(btnEarnOption1, getFormattedTimer(millisUntilFinished));
-
-            if (btnEarnOption1.getText().toString().contains("00:05")) {
-                mInterstitialAd.loadAd(requestAd());
-            }
-        }
-
-        @Override
-        public void onFinish() {
-            enableButton(btnEarnOption1, String.format(getResources().getString(R.string.earning_ether), ethInterstitialReward));
-        }
-    };
-
-    private CountDownTimer Earning2CountdownTimer = new CountDownTimer(Earning2_MAXTIME, COUNTDOWN_INTERVAL) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-            disableButton(btnEarnOption2, getFormattedTimer(millisUntilFinished));
-
-            if (btnEarnOption2.getText().toString().contains("00:05")) {
-                mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
-            }
-        }
-
-        @Override
-        public void onFinish() {
-            enableButton(btnEarnOption2, String.format(getResources().getString(R.string.earning_ether), String.valueOf(ethRewardedVideoReward)));
-        }
-    };
-
-    private CountDownTimer EtheriumPriceRequestTimer = new CountDownTimer(EtheriumRefresh_MAXTIME, COUNTDOWN_INTERVAL) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-        }
-
-        @Override
-        public void onFinish() {
-            EtheriumPriceRequestTimer.start();
-            ethPriceRequest();
-        }
-    };
+    //Android Navigation
+    private DrawerLayout nav_drawer;
+    private ActionBarDrawerToggle nav_toggle;
+    private Toolbar toolbar;
+    private FragmentManager fragManager;
+    private FragmentTransaction fragTransaction;
+    private NavigationView nav_view;
+    private int nav_item_index = 1000, nav_current_item = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRinger = MediaPlayer.create(this, R.raw.coin_drop);
-        sharedPreferencesFactory = new SharedPreferencesFactory(this);
-        mConstants = new Constants(this);
-        mRequestQueue = Volley.newRequestQueue(this);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+//        initializeDrawer();
 
-        tvEarnings = findViewById(R.id.tvTotalEarnings);
-        tvEtherPrice = findViewById(R.id.tvEtherPrice);
+        //Material navigation area
+        nav_drawer = findViewById(R.id.nav_drawer);
+        nav_drawer.addDrawerListener(this);
+        nav_view = findViewById(R.id.nav_view);
+        nav_view.setNavigationItemSelectedListener(this);
 
-        btnEarnOption1 = findViewById(R.id.btnEarnOption1);
-        btnEarnOption2 = findViewById(R.id.btnEarnOption2);
-        btnEarnOption3 = findViewById(R.id.btnEarnOption3);
+        Fragment reward = new Reward();
+        addFragment(reward);
+    }
 
-        btnEarnOption1.setOnClickListener(this);
-        btnEarnOption2.setOnClickListener(this);
-        btnEarnOption3.setOnClickListener(this);
-
-        //Request for updated price of Ethereum
-        ethPriceRequest();
-        EtheriumPriceRequestTimer.start();
-
-        //Banner Ad Area
-        AdView mBannerAd = findViewById(R.id.adView);
-        mBannerAd.loadAd(requestAd());
-        viewMyCoins();
-
-        //Interstitial Ad Area
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
-        mInterstitialAd.loadAd(requestAd());
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                Earning1CountdownTimer.start();
-                myEther += ethInterstitialReward;
-                mRinger.start();
-                Toast.makeText(MainActivity.this, "You have received " + String.valueOf(ethInterstitialReward) + " ether.", Toast.LENGTH_SHORT).show();
-                viewMyCoins();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                Toast.makeText(MainActivity.this, "Interstitial Ad is now loaded.", Toast.LENGTH_SHORT).show();
-                super.onAdLoaded();
-                enableButton(btnEarnOption1, String.format(getResources().getString(R.string.earning_ether), String.valueOf(ethInterstitialReward)));
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                Toast.makeText(MainActivity.this, "Interstitial Ad failed to load. Error Code: ", Toast.LENGTH_SHORT).show();
-                super.onAdFailedToLoad(i);
-            }
-        });
-        disableButton(btnEarnOption1, "Loading...");
-
-        //RewardedVideo Ad Area
-        disableButton(btnEarnOption2, "Loading...");
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
-            @Override
-            public void onRewardedVideoAdLoaded() {
-                Log.wtf("RewardedVideoAd", "onRewardedVideoAdLoaded Method");
-                enableButton(btnEarnOption2, String.format(getResources().getString(R.string.earning_ether), String.valueOf(ethRewardedVideoReward)));
-            }
-
-            @Override
-            public void onRewardedVideoAdOpened() {
-                Log.wtf("RewardedVideoAd", "onRewardedVideoAdOpened Method");
-            }
-
-            @Override
-            public void onRewardedVideoStarted() {
-                Log.wtf("RewardedVideoAd", "onRewardedVideoStarted Method");
-            }
-
-            @Override
-            public void onRewardedVideoAdClosed() {
-                Log.wtf("RewardedVideoAd", "onRewardedVideoAdClosed Method");
-                Earning2CountdownTimer.start();
-            }
-
-            @Override
-            public void onRewarded(RewardItem rewardItem) {
-                Log.wtf("RewardedVideoAd", "onRewarded Method");
-                Toast.makeText(MainActivity.this, "You received " + ethRewardedVideoReward + " " + rewardItem.getType() + ".", Toast.LENGTH_SHORT).show();
-                myEther += ethRewardedVideoReward;
-                saveMyCoins();
-                mRinger.start();
-            }
-
-            @Override
-            public void onRewardedVideoAdLeftApplication() {
-                Log.wtf("RewardedVideoAd", "onRewardedVideoAdLeftApplication Method");
-            }
-
-            @Override
-            public void onRewardedVideoAdFailedToLoad(int i) {
-                Log.wtf("RewardedVideoAd", "onRewardedVideoAdFailedToLoad ERROR: " + i);
-                enableButton(btnEarnOption2, "Retry");
-            }
-        });
-        mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
+    public void addFragment(Fragment frag) {
+        fragManager = getSupportFragmentManager();
+        fragTransaction = fragManager.beginTransaction();
+        fragTransaction.replace(R.id.frmContent, frag, frag.getClass().getSimpleName());
+        fragTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        fragTransaction.addToBackStack(frag.getClass().getSimpleName());
+        fragTransaction.commit();
     }
 
     @Override
-    protected void onPause() {
-        mRewardedVideoAd.pause(this);
-        super.onPause();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                nav_drawer.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected void onResume() {
-        mRewardedVideoAd.resume(this);
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        mRewardedVideoAd.destroy(this);
-        super.onDestroy();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnEarnOption1:
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_dashboard:
+                nav_item_index = 0;
                 break;
-            case R.id.btnEarnOption2:
-                if (btnEarnOption3.getText().toString().equalsIgnoreCase("Retry")) {
-                    mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
-                    disableButton(btnEarnOption2, "Loading...");
-                } else {
-                    loadRewardedVideoAd();
-                }
+            case R.id.nav_my_profile:
+                nav_item_index = 1;
                 break;
-            case R.id.btnEarnOption3:
+            case R.id.nav_report:
+                nav_item_index = 2;
+                break;
+            case R.id.nav_mail_us:
+                nav_item_index = 2;
+                break;
+            case R.id.nav_about_us:
+                nav_item_index = 3;
+                break;
+        }
+
+        nav_drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+        if (nav_item_index == 1000 || nav_current_item == nav_item_index)
+            return;
+
+        switch (nav_item_index) {
+            case 0:
+                nav_current_item = 0;
+                addFragment(new Dashboard());
+                break;
+            case 1:
+                nav_current_item = 1;
+                addFragment(new MyProfile());
+                break;
+            case 2:
+                nav_current_item = 2;
+                addFragment(new Reward());
+                break;
+            case 3:
+                nav_current_item = 3;
+                addFragment(new MyProfile());
+                break;
+            case 4:
+                nav_current_item = 4;
+                addFragment(new MyProfile());
                 break;
         }
     }
 
-    private String getFormattedTimer(long millis) {
-        return String.format(Locale.getDefault(), "%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(millis),
-                TimeUnit.MILLISECONDS.toSeconds(millis) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
-        );
-    }
+    @Override
+    public void onDrawerStateChanged(int newState) {
 
-    private AdRequest requestAd() {
-        return BuildConfig.ENVIRONMENT.equalsIgnoreCase("test") ? new AdRequest.Builder().addTestDevice(TestDeviceID).build() : new AdRequest.Builder().build();
-    }
-
-    private void loadRewardedVideoAd() {
-        if (mRewardedVideoAd.isLoaded()) {
-            mRewardedVideoAd.show();
-        }
-    }
-
-    private void viewMyCoins() {
-        if (sharedPreferencesFactory.getPreferenceByName("Account") != null) {
-            SharedPreferences sharedPreferences = sharedPreferencesFactory.getPreferenceByName("Account");
-            myEther = sharedPreferences.getInt("myEther", 0);
-        }
-
-        tvEarnings.setText("Total Earnings:\n" + myEther + " Satohis");
-    }
-
-    private void saveMyCoins() {
-        SharedPreferences sharedPreferences = sharedPreferencesFactory.getPreferenceByName("Account");
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("myEther", myEther);
-        editor.apply();
-    }
-
-    private void disableButton(Button btn, String text) {
-        btn.setClickable(false);
-        btn.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-        btn.setText(text);
-    }
-
-    private void enableButton(Button btn, String text) {
-        btn.setClickable(true);
-        btn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn.setText(text);
-    }
-
-    private void ethPriceRequest() {
-        final JsonObjectRequest ethPriceRequest = new JsonObjectRequest(Request.Method.GET,
-                getResources().getString(R.string.coinbase_getcurrencies_api_url),
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONObject data = response.getJSONObject("data");
-                            JSONObject rates = data.getJSONObject("rates");
-                            String EthPriceinPHP = rates.getString("PHP");
-                            ethPrice = Float.parseFloat(EthPriceinPHP);
-                            String finalEthPrice = "Ethereum: Php " + mConstants.currencyFormatter(ethPrice);
-                            tvEtherPrice.setText(finalEthPrice);
-
-                            ethInterstitialReward = 0.01f / ethPrice;
-                            ethRewardedVideoReward = 0.02f / ethPrice;
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        mRequestQueue.add(ethPriceRequest);
     }
 }

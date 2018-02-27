@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    tools:context="com.github.jc.cryptopea.Fragments.Reward">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvEtherPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Ethereum: Php 43,321.00" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTotalEarnings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Total earnings:\n0.00000 ETH" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="Reward Options:"/>
+
+            <Button
+                android:id="@+id/btnEarnOption1"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/btnEarnOption2"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/btnEarnOption3"
+                android:visibility="gone"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            ads:adSize="BANNER" />
+
+    </RelativeLayout>
+
+</FrameLayout>

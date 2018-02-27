@@ -2,6 +2,7 @@ package com.github.jc.cryptopea.Utils;
 
 import android.content.Context;
 import android.provider.Telephony;
+import android.widget.Toast;
 
 import java.util.Locale;
 import java.util.Random;
@@ -28,5 +29,13 @@ public class Constants {
 
     public String currencyFormatter(float val){
         return String.format(Locale.getDefault(), "%,.2f", val);
+    }
+
+    public void showShortToast(String Message){
+        Toast.makeText(mContext, Message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showLongToast(String Message){
+        Toast.makeText(mContext, Message, Toast.LENGTH_LONG).show();
     }
 }

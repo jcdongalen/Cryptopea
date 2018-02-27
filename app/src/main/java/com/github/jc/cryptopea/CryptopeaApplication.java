@@ -8,6 +8,7 @@ import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
 
+import com.github.jc.cryptopea.Models.ProfileDetails;
 import com.google.android.gms.ads.MobileAds;
 
 import java.security.MessageDigest;
@@ -23,6 +24,7 @@ public class CryptopeaApplication extends Application {
         super.onCreate();
         GenerateHashKey();
         MobileAds.initialize(this, BuildConfig.ADMOB_APP_ID);
+        ProfileDetails.initialize(this);
     }
 
     private void GenerateHashKey(){

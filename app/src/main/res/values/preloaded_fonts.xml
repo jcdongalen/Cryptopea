@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/chelsea_market</item>
         <item>@font/dekko</item>
+        <item>@font/maven_pro</item>
     </array>
 </resources>

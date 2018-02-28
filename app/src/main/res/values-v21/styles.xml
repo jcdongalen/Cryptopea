@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyle">@style/Default_Button</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="android:textColorPrimary">@color/cardview_light_background</item>
     </style>
 

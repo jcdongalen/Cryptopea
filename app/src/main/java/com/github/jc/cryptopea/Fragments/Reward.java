@@ -56,6 +56,7 @@ public class Reward extends Fragment implements View.OnClickListener {
 
     private InterstitialAd mInterstitialAd;
     private RewardedVideoAd mRewardedVideoAd;
+    private boolean isAbleToShowAd = true;
 
     private Button btnEarnOption1, btnEarnOption2, btnEarnOption3;
     private TextView tvEarnings, tvEtherPrice;
@@ -168,21 +169,16 @@ public class Reward extends Fragment implements View.OnClickListener {
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                try {
+                if (isAbleToShowAd)
                     enableButton(btnEarnOption1, String.format(getResources().getString(R.string.earning_ether), ethInterstitialReward));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                try {
+                if(isAbleToShowAd) {
                     String message = "Interstitial Ad failed to load. Error Code: " + i;
                     mConstants.showShortToast(message);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         });
@@ -195,7 +191,8 @@ public class Reward extends Fragment implements View.OnClickListener {
             @Override
             public void onRewardedVideoAdLoaded() {
                 Log.wtf("RewardedVideoAd", "onRewardedVideoAdLoaded Method");
-                enableButton(btnEarnOption2, String.format(getResources().getString(R.string.earning_ether), ethRewardedVideoReward));
+                if (isAbleToShowAd)
+                    enableButton(btnEarnOption2, String.format(getResources().getString(R.string.earning_ether), ethRewardedVideoReward));
             }
 
             @Override
@@ -232,7 +229,8 @@ public class Reward extends Fragment implements View.OnClickListener {
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
                 Log.wtf("RewardedVideoAd", "onRewardedVideoAdFailedToLoad ERROR: " + i);
-                enableButton(btnEarnOption2, "Retry");
+                if (isAbleToShowAd)
+                    enableButton(btnEarnOption2, "Retry");
             }
         });
         mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
@@ -242,11 +240,13 @@ public class Reward extends Fragment implements View.OnClickListener {
 
     @Override
     public void onAttach(Context context) {
+        this.isAbleToShowAd = true;
         super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
+        this.isAbleToShowAd = false;
         super.onDetach();
     }
 

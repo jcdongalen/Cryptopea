@@ -1,26 +1,44 @@
 package com.github.jc.cryptopea.Activities;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+import android.transition.Fade;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.github.jc.cryptopea.Fragments.AboutUs;
 import com.github.jc.cryptopea.Fragments.Dashboard;
+import com.github.jc.cryptopea.Fragments.Help;
 import com.github.jc.cryptopea.Fragments.MyProfile;
+import com.github.jc.cryptopea.Fragments.Report;
 import com.github.jc.cryptopea.Fragments.Reward;
 import com.github.jc.cryptopea.R;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener, View.OnClickListener {
+
+    private static final int ITEM_DASHBOARD = 0,
+            ITEM_PROFILE = 1,
+            ITEM_REPORT = 2,
+            ITEM_HELP = 3,
+            ITEM_ABOUT_US = 4;
 
     //Android Navigation
     private DrawerLayout nav_drawer;
@@ -30,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentTransaction fragTransaction;
     private NavigationView nav_view;
     private int nav_item_index = 1000, nav_current_item = 1000;
+    private CircleImageView imgProfilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,55 +58,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-//        initializeDrawer();
 
         //Material navigation area
         nav_drawer = findViewById(R.id.nav_drawer);
         nav_drawer.addDrawerListener(this);
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
+        nav_view.setItemTextColor(ColorStateList.valueOf(Color.BLACK));
+        nav_view.setItemIconTintList(null);
+        nav_toggle = new ActionBarDrawerToggle(this, nav_drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        nav_toggle.syncState();
+
+        imgProfilePic = nav_view.getHeaderView(0).findViewById(R.id.imgProfilePic);
+        imgProfilePic.setOnClickListener(this);
 
         Fragment reward = new Reward();
-        addFragment(reward);
+        addFragment(reward, false);
     }
 
-    public void addFragment(Fragment frag) {
+    public void addFragment(Fragment frag, boolean isAddtoBackStack) {
         fragManager = getSupportFragmentManager();
+        String FRAGMENT_TAG = frag.getClass().getSimpleName().toUpperCase();
         fragTransaction = fragManager.beginTransaction();
-        fragTransaction.replace(R.id.frmContent, frag, frag.getClass().getSimpleName());
-        fragTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        fragTransaction.addToBackStack(frag.getClass().getSimpleName());
-        fragTransaction.commit();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                nav_drawer.openDrawer(GravityCompat.START);
-                return true;
+        fragTransaction.setCustomAnimations(R.anim.anim_enter_right, R.anim.anim_exit_left);
+        fragTransaction.replace(R.id.frmContent, frag, FRAGMENT_TAG);
+        if (isAddtoBackStack) {
+            fragTransaction.addToBackStack(FRAGMENT_TAG);
+        } else {
+            fragTransaction.addToBackStack(null);
         }
-        return super.onOptionsItemSelected(item);
+        fragTransaction.commit();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_dashboard:
-                nav_item_index = 0;
+                nav_item_index = ITEM_DASHBOARD;
                 break;
             case R.id.nav_my_profile:
-                nav_item_index = 1;
+                nav_item_index = ITEM_PROFILE;
                 break;
             case R.id.nav_report:
-                nav_item_index = 2;
+                nav_item_index = ITEM_REPORT;
                 break;
             case R.id.nav_mail_us:
-                nav_item_index = 2;
+                nav_item_index = ITEM_HELP;
                 break;
             case R.id.nav_about_us:
-                nav_item_index = 3;
+                nav_item_index = ITEM_ABOUT_US;
                 break;
         }
 
@@ -97,7 +116,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().getBackStackEntryCount() > 1) {
+        if (nav_drawer.isDrawerOpen(GravityCompat.START)) {
+            nav_drawer.closeDrawer(GravityCompat.START);
+        }
+
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            fragManager.popBackStack();
             super.onBackPressed();
         }
     }
@@ -118,25 +142,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
 
         switch (nav_item_index) {
-            case 0:
-                nav_current_item = 0;
-                addFragment(new Dashboard());
+            case ITEM_DASHBOARD:
+                nav_current_item = ITEM_DASHBOARD;
+                addFragment(new Dashboard(), true);
                 break;
-            case 1:
-                nav_current_item = 1;
-                addFragment(new MyProfile());
+            case ITEM_PROFILE:
+                nav_current_item = ITEM_PROFILE;
+                addFragment(new MyProfile(), true);
                 break;
-            case 2:
-                nav_current_item = 2;
-                addFragment(new Reward());
+            case ITEM_REPORT:
+                nav_current_item = ITEM_REPORT;
+                addFragment(new Report(), true);
                 break;
-            case 3:
-                nav_current_item = 3;
-                addFragment(new MyProfile());
+            case ITEM_HELP:
+                nav_current_item = ITEM_HELP;
+                addFragment(new Help(), true);
                 break;
-            case 4:
-                nav_current_item = 4;
-                addFragment(new MyProfile());
+            case ITEM_ABOUT_US:
+                nav_current_item = ITEM_ABOUT_US;
+                addFragment(new AboutUs(), true);
                 break;
         }
     }
@@ -144,5 +168,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onDrawerStateChanged(int newState) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imgProfilePic:
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this, imgProfilePic,
+                            ViewCompat.getTransitionName(imgProfilePic)).toBundle();
+                    Intent intent = new Intent(this, Profile.class);
+                    startActivity(intent, bundle);
+                }
+                else{
+                    startActivity(new Intent(this, Profile.class));
+                }
+                break;
+        }
     }
 }

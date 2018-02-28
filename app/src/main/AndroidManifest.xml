@@ -7,14 +7,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.github.jc.cryptopea.CryptopeaApplication"
+        android:name=".CryptopeaApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CryptopeaAppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -23,10 +22,10 @@
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
-
-        <activity android:name="com.github.jc.cryptopea.Activities.Login"
-            android:theme="@style/CryptopeaAppTheme.NoActionBar"
+        <activity
+            android:name=".Activities.Login"
             android:screenOrientation="portrait"
+            android:theme="@style/CryptopeaAppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,8 +38,8 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name="com.github.jc.cryptopea.Activities.MainActivity" />
-        <activity android:name="com.github.jc.cryptopea.Activities.Profile"></activity>
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.Profile" />
     </application>
 
 </manifest>

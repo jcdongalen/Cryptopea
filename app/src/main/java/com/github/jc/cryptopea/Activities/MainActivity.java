@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -97,8 +98,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 nav_item_index = ITEM_DASHBOARD;
                 break;
             case R.id.nav_my_profile:
-                nav_item_index = ITEM_PROFILE;
-                break;
+//                nav_item_index = ITEM_PROFILE;
+                imgProfilePic.performClick();
+                return false;
             case R.id.nav_report:
                 nav_item_index = ITEM_REPORT;
                 break;
@@ -118,10 +120,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (nav_drawer.isDrawerOpen(GravityCompat.START)) {
             nav_drawer.closeDrawer(GravityCompat.START);
+            return;
         }
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            fragManager.popBackStack();
             super.onBackPressed();
         }
     }
@@ -147,8 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 addFragment(new Dashboard(), true);
                 break;
             case ITEM_PROFILE:
-                nav_current_item = ITEM_PROFILE;
-                addFragment(new MyProfile(), true);
+//                nav_current_item = ITEM_PROFILE;
                 break;
             case ITEM_REPORT:
                 nav_current_item = ITEM_REPORT;

@@ -18,24 +18,19 @@
         android:layout_height="70dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@mipmap/ic_launcher_round"
-        android:transitionName="@string/profile_pic_transition"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FFF"/>
+        android:transitionName="@string/profile_pic_transition"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:fontFamily="@font/alegreya_sans"
         android:textStyle="bold"
-        android:text="John Carlos G. Dongalen"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:text="John Carlos G. Dongalen"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alegreya_sans"
         android:text="johncarlosgdongalen@gmail.com" />
 
 </LinearLayout>

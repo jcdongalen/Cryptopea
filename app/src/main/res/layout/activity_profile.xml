@@ -31,25 +31,19 @@
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     android:src="@mipmap/ic_launcher"
-                    android:transitionName="@string/profile_pic_transition"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FFF" />
+                    android:transitionName="@string/profile_pic_transition"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/alegreya_sans"
                     android:paddingTop="@dimen/nav_header_vertical_spacing"
                     android:textSize="18sp"
                     android:text="John Carlos G. Dongalen"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/alegreya_sans"
-                    android:textColor="#eeeeee"
                     android:text="Software Engineer" />
 
             </LinearLayout>
@@ -71,17 +65,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/acme"
                         android:textSize="24sp"
                         android:textColor="@color/colorPrimaryDark"
-                        android:text="26"/>
+                        android:text="26"
+                        android:textStyle="bold"
+                        android:theme="@style/Default_TextView_Dark"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/alegreya_sans"
-                        android:textColor="#212121"
-                        android:text="Comments"/>
+                        android:text="Comments"
+                        style="@style/Default_TextView_Dark"/>
 
                 </LinearLayout>
 
@@ -96,17 +90,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/acme"
                         android:textSize="24sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="7"/>
+                        android:text="7"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/alegreya_sans"
-                        android:textColor="#212121"
-                        android:text="Channels"/>
+                        android:text="Channels"
+                        style="@style/Default_TextView_Dark"/>
 
                 </LinearLayout>
 
@@ -121,17 +114,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/acme"
                         android:textSize="24sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="48"/>
+                        android:text="48"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/alegreya_sans"
-                        android:textColor="#212121"
-                        android:text="Bookmarks"/>
+                        android:text="Bookmarks"
+                        style="@style/Default_TextView_Dark"/>
 
                 </LinearLayout>
 

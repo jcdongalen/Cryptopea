@@ -326,12 +326,16 @@ public class Reward extends Fragment implements View.OnClickListener {
     private void disableButton(Button btn, String text) {
         btn.setClickable(false);
         btn.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+        btn.setTextColor(getResources().getColor(R.color.global_text_color));
+        btn.setShadowLayer(2, -1, -1, R.color.global_text_shadow_white);
         btn.setText(text);
     }
 
     private void enableButton(Button btn, String text) {
         btn.setClickable(true);
         btn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        btn.setTextColor(getResources().getColor(android.R.color.white));
+        btn.setShadowLayer(2, -1, -1, R.color.global_text_shadow);
         btn.setText(text);
     }
 

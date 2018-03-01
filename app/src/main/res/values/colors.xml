@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryDark">#FFA000</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorPrimary">#FFC107</color>-->
+    <!--<color name="colorPrimaryDark">#FFA000</color>-->
+    <!--<color name="colorAccent">#FFEB3B</color>-->
+    <!--<color name="background">#FCFCFC</color>-->
+    <!--<color name="light_grey">#EDEDED</color>-->
+    <!--<color name="purple">#7C4DFF</color>-->
+    <!--<color name="yellow">#FFB300</color>-->
+    <!--<color name="green">#00BFA5</color>-->
+
+    <!--<color name="LightPrimaryColor">#FFECB3</color>-->
+    <!--<color name="global_text_color">#212121</color>-->
+    <!--<color name="global_icon_color">#212121</color>-->
+    <!--<color name="global_secondary_text_color">#757575</color>-->
+    <!--<color name="global_divider_color">#BDBDBD</color>-->
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#03A9F4</color>
     <color name="background">#FCFCFC</color>
     <color name="light_grey">#EDEDED</color>
     <color name="purple">#7C4DFF</color>
     <color name="yellow">#FFB300</color>
     <color name="green">#00BFA5</color>
+
+    <color name="LightPrimaryColor">#C5CAE9</color>
+    <color name="global_text_color">#212121</color>
+    <color name="global_text_shadow">#7F000000</color>
+    <color name="global_text_shadow_white">#FFFFFF</color>
+    <color name="global_icon_color">#FFFFFF</color>
+    <color name="global_secondary_text_color">#757575</color>
+    <color name="global_divider_color">#BDBDBD</color>
 </resources>

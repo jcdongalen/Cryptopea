@@ -44,7 +44,7 @@ public class Constants {
     }
 
     public void showLongSnackbar(String message) {
-        Snackbar.make(((Activity) mContext).getWindow().getDecorView().findViewById(android.R.id.content), "Invalid Credentials", Snackbar.LENGTH_LONG)
+        Snackbar.make(((Activity) mContext).getWindow().getDecorView().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
                 .setAction("Ok", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

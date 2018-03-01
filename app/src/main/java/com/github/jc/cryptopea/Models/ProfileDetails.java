@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.github.jc.cryptopea.Utils.SharedPreferencesFactory;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 /**
@@ -23,6 +24,7 @@ public class ProfileDetails {
             profile_picture_url = "",
             EtherToken = "";
     private Float RewardedEther = 0.000000000000f;
+    private FirebaseUser mUser;
 
     private ProfileDetails(Context context) {
         this.mContext = context;
@@ -61,6 +63,14 @@ public class ProfileDetails {
         String ProfileDetails_json = gson.toJson(INSTANCE);
         editor.putString("ProfileDetails", ProfileDetails_json);
         editor.apply();
+    }
+
+    public FirebaseUser getmUser() {
+        return mUser;
+    }
+
+    public void setmUser(FirebaseUser mUser) {
+        this.mUser = mUser;
     }
 
     public Float getRewardedEther() {

@@ -8,6 +8,10 @@
     <string name="FACEBOOK_APP_ID">177448152981840</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">[ACCOUNT_KIT_CLIENT_TOKEN]</string>
 
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">177448152981840</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb177448152981840</string>
+
     <string name="APP_ID">ca-app-pub-3703727949107398~8246226074</string>
     <string name="Cryptopea_BANNER_ID">ca-app-pub-3703727949107398/6199056352</string>
     <string name="Cryptopea_INTERSTITAL_ID">ca-app-pub-3703727949107398/6098095956</string>
@@ -22,4 +26,10 @@
 
     <string name="action_settings">Settings</string>
     <string name="profile_pic_transition">ProfilePicTransition</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign-in</string>
+    <string name="login_title">Login to your account:</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="create_account">Create Account</string>
 </resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "106678150783",
+    "firebase_url": "https://cryptopea.firebaseio.com",
+    "project_id": "cryptopea",
+    "storage_bucket": "cryptopea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106678150783:android:df30fb89fd7f8138",
+        "android_client_info": {
+          "package_name": "com.github.jc.cryptopea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106678150783-sk1ib9sd8ojnaruoli6q8p31fopheac2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.jc.cryptopea",
+            "certificate_hash": "0f5050fcdf864a760f1aa2ebeddf125d55bb8e8a"
+          }
+        },
+        {
+          "client_id": "106678150783-3fri76troolu43oasjnhlhbum2ecknqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGg-MFUGsHMbsPedw8Yz_7ZbdhhYhI_XI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106678150783-3fri76troolu43oasjnhlhbum2ecknqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

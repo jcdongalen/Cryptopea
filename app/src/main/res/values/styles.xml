@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyle">@style/Default_Button</item>
         <item name="android:editTextStyle">@style/Default_EditText</item>
+        <item name="editTextStyle">@style/Default_EditText</item>
         <item name="android:textViewStyle">@style/Default_TextView</item>
     </style>
 
@@ -17,6 +18,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyle">@style/Default_Button</item>
         <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:editTextStyle">@style/Default_EditText</item>
+        <item name="editTextStyle">@style/Default_EditText</item>
+        <item name="android:textViewStyle">@style/Default_TextView_Dark</item>
     </style>
 
     <style name="Default_TextView" parent="@android:style/Widget.TextView">

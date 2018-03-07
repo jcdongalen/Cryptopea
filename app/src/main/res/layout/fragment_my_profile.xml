@@ -25,13 +25,19 @@
                 android:paddingTop="24dp"
                 android:layout_weight="40">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgProfilePic"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    android:src="@mipmap/ic_launcher"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FFF" />
+                <com.github.florent37.shapeofview.shapes.CircleView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:circle_borderColor="@android:color/white"
+                    app:circle_borderWidth="1dp">
+
+                    <ImageView
+                        android:id="@+id/imgProfilePic"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:src="@mipmap/ic_launcher" />
+
+                </com.github.florent37.shapeofview.shapes.CircleView>
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package com.github.jc.cryptopea;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -8,6 +9,8 @@ import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.github.jc.cryptopea.Models.ProfileDetails;
 import com.google.android.gms.ads.MobileAds;
 
@@ -25,8 +28,11 @@ public class CryptopeaApplication extends Application {
         GenerateHashKey();
         MobileAds.initialize(this, BuildConfig.ADMOB_APP_ID);
         ProfileDetails.initialize(this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
     }
 
+    @SuppressLint("PackageManagerGetSignatures")
     private void GenerateHashKey(){
         PackageInfo info;
         try {

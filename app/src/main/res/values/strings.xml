@@ -7,6 +7,8 @@
 
     <string name="FACEBOOK_APP_ID">177448152981840</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">[ACCOUNT_KIT_CLIENT_TOKEN]</string>
+    <string name="facebook_app_id">177448152981840</string>
+    <string name="fb_login_protocol_scheme">fb177448152981840</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">177448152981840</string>

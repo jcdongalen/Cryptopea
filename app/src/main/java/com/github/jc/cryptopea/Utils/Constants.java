@@ -6,7 +6,12 @@ import android.provider.Telephony;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.github.jc.cryptopea.Activities.MainActivity;
+import com.github.jc.cryptopea.R;
 
 import java.util.Locale;
 import java.util.Random;
@@ -59,5 +64,14 @@ public class Constants {
             InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public void GlideImageLoader(String url, ImageView targetImageView){
+        GlideApp.with(mContext)
+                .load(url)
+                .fitCenter()
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(targetImageView);
     }
 }

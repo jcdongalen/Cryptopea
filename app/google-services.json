@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "106678150783-89j1s35kuhi13m7u3tig6lvq27kg4pnl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.jc.cryptopea",
+            "certificate_hash": "0da6aa45813d82a90c746e6758ac31557fadebf0"
+          }
+        },
+        {
           "client_id": "106678150783-sk1ib9sd8ojnaruoli6q8p31fopheac2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

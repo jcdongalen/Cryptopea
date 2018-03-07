@@ -22,6 +22,7 @@ import android.transition.Fade;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.jc.cryptopea.Fragments.AboutUs;
 import com.github.jc.cryptopea.Fragments.Dashboard;
@@ -29,9 +30,11 @@ import com.github.jc.cryptopea.Fragments.Help;
 import com.github.jc.cryptopea.Fragments.MyProfile;
 import com.github.jc.cryptopea.Fragments.Report;
 import com.github.jc.cryptopea.Fragments.Reward;
+import com.github.jc.cryptopea.Models.ProfileDetails;
 import com.github.jc.cryptopea.R;
+import com.github.jc.cryptopea.Utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener, View.OnClickListener {
 
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ITEM_HELP = 3,
             ITEM_ABOUT_US = 4;
 
+    private Constants mConstants;
+    private ProfileDetails profileDetails;
+
     //Android Navigation
     private DrawerLayout nav_drawer;
     private ActionBarDrawerToggle nav_toggle;
@@ -49,12 +55,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentTransaction fragTransaction;
     private NavigationView nav_view;
     private int nav_item_index = 1000, nav_current_item = 1000;
-    private CircleImageView imgProfilePic;
+    private ImageView imgProfilePic;
+    private TextView tvName, tvEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mConstants = new Constants(this);
+        profileDetails = ProfileDetails.getInstance();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,6 +82,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         imgProfilePic = nav_view.getHeaderView(0).findViewById(R.id.imgProfilePic);
         imgProfilePic.setOnClickListener(this);
+        mConstants.GlideImageLoader(profileDetails.getPhoto_url(), imgProfilePic);
+
+        tvName = nav_view.getHeaderView(0).findViewById(R.id.tvName);
+        tvName.setText(profileDetails.getDisplay_name());
+        tvEmail = nav_view.getHeaderView(0).findViewById(R.id.tvEmail);
+        tvEmail.setText(profileDetails.getEmail());
 
         Fragment reward = new Reward();
         addFragment(reward, false);
@@ -109,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_about_us:
                 nav_item_index = ITEM_ABOUT_US;
+                break;
+            case R.id.nav_sign_out:
+                FirebaseAuth.getInstance().signOut();
                 break;
         }
 

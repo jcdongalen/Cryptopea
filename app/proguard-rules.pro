@@ -28,5 +28,11 @@
   public *;
 }
 
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+-keep class com.github.jc.cryptopea.** {
+ *;
+}
+
+#TestFairy settings
+-keep class com.testfairy.** { *; }
+-dontwarn com.testfairy.**
+-keepattributes Exceptions, Signature, LineNumberTable

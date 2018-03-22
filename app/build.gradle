@@ -52,6 +52,8 @@ android {
         }
         release {
             signingConfig signingConfigs.release
+            shrinkResources true
+            useProguard true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "ENVIRONMENT", "\"live\"")
@@ -92,6 +94,9 @@ dependencies {
     compile 'com.github.florent37:shapeofview:1.0.6'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+    //TestFairy SDK
+//    compile 'testfairy:testfairy-android-sdk:1.+@aar'
 }
 
 

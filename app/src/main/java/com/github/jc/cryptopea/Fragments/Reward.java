@@ -49,37 +49,37 @@ public class Reward extends Fragment implements View.OnClickListener {
     private static final int COUNTDOWN_INTERVAL = 1000;
     private static final int EtheriumRefresh_MAXTIME = 1000 * 60 * 10;
 
-    private float myEther = 0.000000000000f;
-    private float ethPrice = 0.000000000000f;
-    private float ethInterstitialReward = 0.000000000000f;
-    private float ethRewardedVideoReward = 0.000000000000f;
+    private float myEther = 0.0000000000f;
+    private float ethPrice = 0.0000000000f;
+    private float ethInterstitialReward = 0.0000000000f;
+    private float ethRewardedVideoReward = 0.0000000000f;
 
     private InterstitialAd mInterstitialAd;
     private RewardedVideoAd mRewardedVideoAd;
-    private boolean isAbleToShowAd = true;
+    private boolean isAbleToShowAd = true, isTimer1Running = false, isTimer2Running = false;
 
     private Button btnEarnOption1, btnEarnOption2, btnEarnOption3;
-    private TextView tvEarnings, tvEtherPrice;
+    private TextView tvEarnings, tvEtherPrice, tvEtherEarned;
 
     private MediaPlayer mRinger;
 
     private SharedPreferencesFactory sharedPreferencesFactory;
     private Constants mConstants;
     private RequestQueue mRequestQueue;
+    private RewardInterface mRewardCallback;
 
     private CountDownTimer Earning1CountdownTimer = new CountDownTimer(Earning1_MAXTIME, COUNTDOWN_INTERVAL) {
         @Override
         public void onTick(long millisUntilFinished) {
             disableButton(btnEarnOption1, getFormattedTimer(millisUntilFinished));
-
-            if (btnEarnOption1.getText().toString().contains("00:05")) {
-                mInterstitialAd.loadAd(requestAd());
-            }
+            isTimer1Running = true;
         }
 
         @Override
         public void onFinish() {
-            enableButton(btnEarnOption1, String.format(getResources().getString(R.string.earning_ether), ethInterstitialReward));
+            disableButton(btnEarnOption1, "Loading...");
+            mInterstitialAd.loadAd(requestAd());
+            isTimer1Running = false;
         }
     };
 
@@ -87,15 +87,14 @@ public class Reward extends Fragment implements View.OnClickListener {
         @Override
         public void onTick(long millisUntilFinished) {
             disableButton(btnEarnOption2, getFormattedTimer(millisUntilFinished));
-
-            if (btnEarnOption2.getText().toString().contains("00:05")) {
-                mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
-            }
+            isTimer2Running = true;
         }
 
         @Override
         public void onFinish() {
-            enableButton(btnEarnOption2, String.format(getResources().getString(R.string.earning_ether), ethRewardedVideoReward));
+            disableButton(btnEarnOption2, "Loading...");
+            mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
+            isTimer2Running = false;
         }
     };
 
@@ -110,6 +109,10 @@ public class Reward extends Fragment implements View.OnClickListener {
             ethPriceRequest();
         }
     };
+
+    public interface RewardInterface {
+        void onRewardCredited(float myEther);
+    }
 
     public Reward() {
     }
@@ -132,6 +135,7 @@ public class Reward extends Fragment implements View.OnClickListener {
 
         tvEarnings = view.findViewById(R.id.tvTotalEarnings);
         tvEtherPrice = view.findViewById(R.id.tvEtherPrice);
+        tvEtherEarned = view.findViewById(R.id.tvEtherEarned);
 
         btnEarnOption1 = view.findViewById(R.id.btnEarnOption1);
         btnEarnOption2 = view.findViewById(R.id.btnEarnOption2);
@@ -148,7 +152,7 @@ public class Reward extends Fragment implements View.OnClickListener {
         //Banner Ad Area
         AdView mBannerAd = view.findViewById(R.id.adView);
         mBannerAd.loadAd(requestAd());
-        viewMyCoins();
+        checkMyCoins();
 
         //Interstitial Ad Area
         mInterstitialAd = new InterstitialAd(getActivity().getApplicationContext());
@@ -158,7 +162,7 @@ public class Reward extends Fragment implements View.OnClickListener {
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
-                String message = "You have received " + String.format(Locale.getDefault(), "%.12f", ethInterstitialReward) + " ether.";
+                String message = "You have received " + String.format(Locale.getDefault(), "%.10f", ethInterstitialReward) + " ether.";
                 mConstants.showShortToast(message);
                 Earning1CountdownTimer.start();
                 myEther += ethInterstitialReward;
@@ -169,17 +173,14 @@ public class Reward extends Fragment implements View.OnClickListener {
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                if (isAbleToShowAd)
+                if (!isTimer1Running)
                     enableButton(btnEarnOption1, String.format(getResources().getString(R.string.earning_ether), ethInterstitialReward));
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                if(isAbleToShowAd) {
-                    String message = "Interstitial Ad failed to load. Error Code: " + i;
-                    mConstants.showShortToast(message);
-                }
+                enableButton(btnEarnOption1, "Retry");
             }
         });
         disableButton(btnEarnOption1, "Loading...");
@@ -191,7 +192,7 @@ public class Reward extends Fragment implements View.OnClickListener {
             @Override
             public void onRewardedVideoAdLoaded() {
                 Log.wtf("RewardedVideoAd", "onRewardedVideoAdLoaded Method");
-                if (isAbleToShowAd)
+                if (!isTimer2Running)
                     enableButton(btnEarnOption2, String.format(getResources().getString(R.string.earning_ether), ethRewardedVideoReward));
             }
 
@@ -214,10 +215,10 @@ public class Reward extends Fragment implements View.OnClickListener {
             @Override
             public void onRewarded(RewardItem rewardItem) {
                 Log.wtf("RewardedVideoAd", "onRewarded Method");
-                String message = "You received " + String.format(Locale.getDefault(), "%.12f", ethRewardedVideoReward) + " " + rewardItem.getType() + ".";
+                String message = "You received " + String.format(Locale.getDefault(), "%.10f", ethRewardedVideoReward) + " " + rewardItem.getType() + ".";
                 mConstants.showShortToast(message);
                 myEther += ethRewardedVideoReward;
-                saveMyCoins();
+                viewMyCoins();
                 mRinger.start();
             }
 
@@ -229,8 +230,8 @@ public class Reward extends Fragment implements View.OnClickListener {
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
                 Log.wtf("RewardedVideoAd", "onRewardedVideoAdFailedToLoad ERROR: " + i);
-                if (isAbleToShowAd)
-                    enableButton(btnEarnOption2, "Retry");
+                enableButton(btnEarnOption2, "Retry");
+                mConstants.showLongSnackbar("Unable to get ad. Error code: " + i);
             }
         });
         mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
@@ -253,6 +254,7 @@ public class Reward extends Fragment implements View.OnClickListener {
     @Override
     public void onPause() {
         mRewardedVideoAd.pause(getActivity());
+        saveMyCoins();
         super.onPause();
     }
 
@@ -272,19 +274,22 @@ public class Reward extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnEarnOption1:
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
+                if (((Button) v).getText().toString().equalsIgnoreCase("Retry")) {
+                    mInterstitialAd.loadAd(requestAd());
+                    disableButton((Button) v, "Loading...");
+                } else {
+                    if (mInterstitialAd.isLoaded() && isAbleToShowAd) {
+                        mInterstitialAd.show();
+                    }
                 }
                 break;
             case R.id.btnEarnOption2:
-                if (btnEarnOption3.getText().toString().equalsIgnoreCase("Retry")) {
+                if (((Button) v).getText().toString().equalsIgnoreCase("Retry")) {
                     mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
                     disableButton(btnEarnOption2, "Loading...");
                 } else {
                     loadRewardedVideoAd();
                 }
-                break;
-            case R.id.btnEarnOption3:
                 break;
         }
     }
@@ -302,18 +307,23 @@ public class Reward extends Fragment implements View.OnClickListener {
     }
 
     private void loadRewardedVideoAd() {
-        if (mRewardedVideoAd.isLoaded()) {
+        if (mRewardedVideoAd.isLoaded() && isAbleToShowAd) {
             mRewardedVideoAd.show();
         }
     }
 
-    private void viewMyCoins() {
+    private void checkMyCoins() {
         if (sharedPreferencesFactory.getPreferenceByName("Account") != null) {
             SharedPreferences sharedPreferences = sharedPreferencesFactory.getPreferenceByName("Account");
-            myEther = sharedPreferences.getFloat("myEther", 0.000000000000f);
+            myEther = sharedPreferences.getFloat("myEther", 0.0000000000f);
         }
 
-        tvEarnings.setText("Total Earnings:\n" + String.format("%.12f ", myEther) + " Ethers.");
+        viewMyCoins();
+    }
+
+    private void viewMyCoins() {
+        tvEarnings.setText("Total Earnings:\n" + String.format("%.10f ", myEther) + " Ethers.");
+        tvEtherEarned.setText(String.format(Locale.getDefault(), "%.10f ", myEther));
     }
 
     private void saveMyCoins() {
@@ -333,7 +343,7 @@ public class Reward extends Fragment implements View.OnClickListener {
 
     private void enableButton(Button btn, String text) {
         btn.setClickable(true);
-        btn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        btn.setBackground(getResources().getDrawable(R.drawable.button_effect_ripple));
         btn.setTextColor(getResources().getColor(android.R.color.white));
         btn.setShadowLayer(2, -1, -1, R.color.global_text_shadow);
         btn.setText(text);
@@ -357,13 +367,11 @@ public class Reward extends Fragment implements View.OnClickListener {
                             ethInterstitialReward = 0.01f / ethPrice;
                             ethRewardedVideoReward = 0.02f / ethPrice;
 
-                            if (btnEarnOption1.isClickable()) {
-                                btnEarnOption1.setText(String.format(Locale.getDefault(), "+ %.12f", ethInterstitialReward));
-                            }
+                            if (btnEarnOption1.isClickable() && !isTimer1Running)
+                                btnEarnOption1.setText(String.format(Locale.getDefault(), "+ %.10f", ethInterstitialReward));
 
-                            if (btnEarnOption2.isClickable()) {
-                                btnEarnOption2.setText(String.format(Locale.getDefault(), "+ %.12f", ethRewardedVideoReward));
-                            }
+                            if (btnEarnOption2.isClickable() && !isTimer2Running)
+                                btnEarnOption2.setText(String.format(Locale.getDefault(), "+ %.10f", ethRewardedVideoReward));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

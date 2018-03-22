@@ -18,7 +18,7 @@
     <string name="Cryptopea_BANNER_ID">ca-app-pub-3703727949107398/6199056352</string>
     <string name="Cryptopea_INTERSTITAL_ID">ca-app-pub-3703727949107398/6098095956</string>
     <string name="Cryptopea_REWARDEDVIDEO_ID">ca-app-pub-3703727949107398/2821567059</string>
-    <string name="earning_ether">+ %.12f</string>
+    <string name="earning_ether">+ %.10f</string>
 
     <string name="coinbase_getcurrencies_api_url">https://api.coinbase.com/v2/exchange-rates?currency=ETH</string>
 

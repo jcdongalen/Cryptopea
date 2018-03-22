@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.jc.cryptopea.BuildConfig;
 import com.github.jc.cryptopea.Fragments.AboutUs;
 import com.github.jc.cryptopea.Fragments.Dashboard;
 import com.github.jc.cryptopea.Fragments.Help;
@@ -89,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvEmail = nav_view.getHeaderView(0).findViewById(R.id.tvEmail);
         tvEmail.setText(profileDetails.getEmail());
 
-        Fragment reward = new Reward();
-        addFragment(reward, false);
+        Dashboard dashboard = new Dashboard();
+        addFragment(dashboard, true);
     }
 
     public void addFragment(Fragment frag, boolean isAddtoBackStack) {
@@ -114,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 nav_item_index = ITEM_DASHBOARD;
                 break;
             case R.id.nav_my_profile:
-//                nav_item_index = ITEM_PROFILE;
                 imgProfilePic.performClick();
                 return false;
             case R.id.nav_report:
@@ -128,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_sign_out:
                 FirebaseAuth.getInstance().signOut();
+                finish();
+                Intent intent = new Intent(this, Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
         }
 
@@ -168,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 addFragment(new Dashboard(), true);
                 break;
             case ITEM_PROFILE:
-//                nav_current_item = ITEM_PROFILE;
                 break;
             case ITEM_REPORT:
                 nav_current_item = ITEM_REPORT;
@@ -192,15 +196,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imgProfilePic:
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this, imgProfilePic,
                             ViewCompat.getTransitionName(imgProfilePic)).toBundle();
                     Intent intent = new Intent(this, Profile.class);
                     startActivity(intent, bundle);
-                }
-                else{
+                } else {
                     startActivity(new Intent(this, Profile.class));
                 }
                 break;

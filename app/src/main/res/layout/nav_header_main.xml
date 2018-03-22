@@ -16,7 +16,6 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:elevation="4dp"
-        android:transitionName="@string/profile_pic_transition"
         app:circle_borderColor="@android:color/white"
         app:circle_borderWidth="1dp">
 
@@ -24,6 +23,7 @@
             android:id="@+id/imgProfilePic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:transitionName="@string/profile_pic_transition"
             android:src="@mipmap/ic_launcher"/>
 
     </com.github.florent37.shapeofview.shapes.CircleView>

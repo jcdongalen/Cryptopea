@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changeBounds xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="3000"
+    android:interpolator="@android:interpolator/accelerate_cubic">
+    <arcMotion
+        android:maximumAngle="45"
+        android:minimumHorizontalAngle="90"
+        android:minimumVerticalAngle="90"/>
+</changeBounds>

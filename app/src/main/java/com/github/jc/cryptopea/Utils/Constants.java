@@ -74,4 +74,14 @@ public class Constants {
                 .error(R.mipmap.ic_launcher)
                 .into(targetImageView);
     }
+
+    public static void showSnackMessage(Context context, String message, boolean showDurationShort){
+        View rootView = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar snackbar;
+        if(showDurationShort)
+            snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT);
+        else
+            snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
 }

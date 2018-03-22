@@ -9,57 +9,108 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvEtherPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="Ethereum: Loading..."
-            style="@style/Default_TextView_Dark"/>
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvTotalEarnings"
+                android:id="@+id/tvEtherPrice"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:text="Total earnings:\n0.00000 ETH"
-                style="@style/Default_TextView_Dark" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Ethereum: Loading..."
+                style="@style/Default_TextView_Dark"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="Reward Options:"
+                android:text="Total earnings:"
                 style="@style/Default_TextView_Dark"/>
 
-            <Button
-                android:id="@+id/btnEarnOption1"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp">
 
-            <Button
-                android:id="@+id/btnEarnOption2"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp" />
+                <TextView
+                    style="@style/Default_TextView_Dark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ETH"
+                    android:textSize="48sp" />
 
-            <Button
-                android:id="@+id/btnEarnOption3"
-                android:visibility="gone"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvEtherEarned"
+                    style="@style/Default_TextView_Dark"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end|center"
+                    android:text="0.0000001423"
+                    android:textSize="36sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/colorPrimary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTotalEarnings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:text="Total earnings:\n0.00000 ETH"
+                    style="@style/Default_TextView_Dark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="Reward Options:"
+                    style="@style/Default_TextView_Dark"/>
+
+                <Button
+                    android:id="@+id/btnEarnOption1"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
+
+                <Button
+                    android:id="@+id/btnEarnOption2"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
+
+                <Button
+                    android:id="@+id/btnEarnOption3"
+                    android:visibility="gone"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_effect_ripple"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -69,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            ads:adUnitId="ca-app-pub-3703727949107398/6199056352"
             ads:adSize="BANNER" />
 
     </RelativeLayout>

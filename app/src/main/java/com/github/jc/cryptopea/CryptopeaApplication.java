@@ -30,6 +30,7 @@ public class CryptopeaApplication extends Application {
         ProfileDetails.initialize(this);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
+//        TestFairy.begin(this, "88d433fdec658634bf0d1bf01992a9d2cf8cda4b");
     }
 
     @SuppressLint("PackageManagerGetSignatures")

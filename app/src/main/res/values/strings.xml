@@ -34,4 +34,6 @@
     <string name="login_title">Login to your account:</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="create_account">Create Account</string>
+    <string name="view_all">View all</string>
+    <string name="last_10_transactions">LAST 10 TRANSACTIONS</string>
 </resources>

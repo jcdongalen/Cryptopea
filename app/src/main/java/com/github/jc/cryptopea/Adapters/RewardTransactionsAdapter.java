@@ -39,9 +39,14 @@ public class RewardTransactionsAdapter extends RecyclerView.Adapter<RewardTransa
         holder.imgLogo.setImageResource(R.drawable.ic_eth);
         holder.tvRemarks.setText(item.getRemarks());
         holder.tvStatus.setText(item.getStatus());
-        holder.tvValue.setText(item.getValue());
         holder.tvDate.setText(item.getDate());
         holder.tvTime.setText(item.getTime());
+        holder.tvValue.setText(item.getValue());
+
+        if(item.getValue().contains("-"))
+            holder.tvValue.setTextColor(mContext.getResources().getColor(android.R.color.holo_red_dark));
+        else
+            holder.tvValue.setTextColor(mContext.getResources().getColor(android.R.color.holo_green_dark));
     }
 
     @Override

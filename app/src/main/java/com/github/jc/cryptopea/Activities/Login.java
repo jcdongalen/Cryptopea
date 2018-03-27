@@ -49,8 +49,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
-import java.util.Arrays;
-
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 123;

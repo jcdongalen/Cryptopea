@@ -61,6 +61,26 @@
 
             </LinearLayout>
 
+            <com.github.florent37.shapeofview.shapes.CutCornerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="16dp"
+                app:cutCorner_bottomRightSize="16dp"
+                app:cutCorner_topRightSize="16dp">
+
+                <Button
+                    android:id="@+id/btnStartEarning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginBottom="@dimen/nav_header_vertical_spacing"
+                    android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="4dp"
+                    android:text="Start Earning" />
+
+            </com.github.florent37.shapeofview.shapes.CutCornerView>
+
         </android.support.v7.widget.CardView>
 
         <LinearLayout
@@ -75,7 +95,7 @@
                 android:layout_marginBottom="@dimen/nav_header_vertical_spacing"
                 android:layout_marginTop="@dimen/nav_header_vertical_spacing"
                 android:layout_weight="1"
-                android:text="LAST 10 TRANSACTIONS"
+                android:text="@string/last_10_transactions"
                 android:textSize="18sp" />
 
 
@@ -93,7 +113,7 @@
                     android:layout_marginTop="@dimen/nav_header_vertical_spacing"
                     android:paddingEnd="8dp"
                     android:paddingStart="4dp"
-                    android:text="View all" />
+                    android:text="@string/view_all" />
 
             </com.github.florent37.shapeofview.shapes.CutCornerView>
 

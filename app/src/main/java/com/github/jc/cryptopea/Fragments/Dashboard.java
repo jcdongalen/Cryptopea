@@ -11,9 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.jc.cryptopea.Activities.MainActivity;
 import com.github.jc.cryptopea.Adapters.RewardTransactionsAdapter;
 import com.github.jc.cryptopea.Models.RewardTransactionItem;
 import com.github.jc.cryptopea.R;
@@ -29,10 +31,11 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Dashboard extends Fragment implements RecyclerViewItemTouchListener.ItemClickListener {
+public class Dashboard extends Fragment implements RecyclerViewItemTouchListener.ItemClickListener, View.OnClickListener {
 
     private View view;
     private RecyclerView rvTransactions;
+    private Button btnStartEarning;
 
     private RewardTransactionsAdapter rewardTransactionsAdapter;
     private List<RewardTransactionItem> rewardTransactionItemList = new ArrayList<>();
@@ -55,31 +58,45 @@ public class Dashboard extends Fragment implements RecyclerViewItemTouchListener
         rvTransactions.setAdapter(rewardTransactionsAdapter);
         rvTransactions.addOnItemTouchListener(new RecyclerViewItemTouchListener.RecyclerItemTouchListener(getActivity(), rvTransactions, this));
         initializeDummyRewardItems();
+
+        btnStartEarning = view.findViewById(R.id.btnStartEarning);
+
+        btnStartEarning.setOnClickListener(this);
+
         return view;
     }
 
     public void initializeDummyRewardItems() {
         RewardTransactionItem r1 = new RewardTransactionItem("id-00001", "You received ether from External Account", "Payment successful.", "05:25 PM", "03/21/2018", "+ 0.0000002346");
         rewardTransactionItemList.add(r1);
-        r1 = new RewardTransactionItem("id-00002", "You received ether from External Account", "Payment successful.", "06:28 PM", "03/21/2018", "+ 0.0000002087");
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
+        r1 = new RewardTransactionItem("id-00002", "You received ether from External Account", "Payment successful.", "06:28 PM", "03/21/2018", "- 0.0000002087");
         rewardTransactionItemList.add(r1);
-        r1 = new RewardTransactionItem("id-00003", "You received ether from External Account", "Payment successful.", "06:31 PM", "03/21/2018", "+ 0.0000002458");
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
+        r1 = new RewardTransactionItem("id-00003", "You received ether from External Account", "Payment successful.", "06:31 PM", "03/21/2018", "- 0.0000002458");
         rewardTransactionItemList.add(r1);
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
         r1 = new RewardTransactionItem("id-00004", "You sent ether to External Account", "Payment successful.", "06:41 PM", "03/21/2018", "+ 0.0000002136");
         rewardTransactionItemList.add(r1);
-        r1 = new RewardTransactionItem("id-00005", "You received ether from External Account", "Payment successful.", "06:45 PM", "03/21/2018", "+ 0.0000003456");
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
+        r1 = new RewardTransactionItem("id-00005", "You received ether from External Account", "Payment successful.", "06:45 PM", "03/21/2018", "- 0.0000003456");
         rewardTransactionItemList.add(r1);
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
         r1 = new RewardTransactionItem("id-00006", "You received ether from External Account", "Payment successful.", "07:27 PM", "03/21/2018", "+ 0.0000001236");
         rewardTransactionItemList.add(r1);
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
         r1 = new RewardTransactionItem("id-00007", "You received ether from External Account", "Payment successful.", "07:42 PM", "03/21/2018", "+ 0.0000004236");
         rewardTransactionItemList.add(r1);
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
         r1 = new RewardTransactionItem("id-00008", "You received ether from External Account", "Payment successful.", "08:25 PM", "03/21/2018", "+ 0.0000002231");
         rewardTransactionItemList.add(r1);
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
         r1 = new RewardTransactionItem("id-00009", "You received ether from External Account", "Payment successful.", "09:25 PM", "03/21/2018", "+ 0.0000004421");
         rewardTransactionItemList.add(r1);
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
         r1 = new RewardTransactionItem("id-00010", "You received ether from External Account", "Payment successful.", "11:25 PM", "03/21/2018", "+ 0.0000003792");
         rewardTransactionItemList.add(r1);
-        rewardTransactionsAdapter.notifyDataSetChanged();
+        rewardTransactionsAdapter.notifyItemChanged(rewardTransactionItemList.size());
     }
 
     @Override
@@ -89,6 +106,14 @@ public class Dashboard extends Fragment implements RecyclerViewItemTouchListener
 
     @Override
     public void onLongClick(View view, int position) {
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnStartEarning:
+                ((MainActivity) getActivity()).addFragment(new Reward(), true);
+                break;
+        }
     }
 }

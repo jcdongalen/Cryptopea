@@ -85,4 +85,9 @@ public class AdvertisementFactory implements RewardedVideoAdListener {
     public void onRewardedVideoAdFailedToLoad(int i) {
 
     }
+
+    @Override
+    public void onRewardedVideoCompleted() {
+
+    }
 }

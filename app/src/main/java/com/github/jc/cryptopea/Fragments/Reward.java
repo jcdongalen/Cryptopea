@@ -233,6 +233,11 @@ public class Reward extends Fragment implements View.OnClickListener {
                 enableButton(btnEarnOption2, "Retry");
                 mConstants.showLongSnackbar("Unable to get ad. Error code: " + i);
             }
+
+            @Override
+            public void onRewardedVideoCompleted() {
+
+            }
         });
         mRewardedVideoAd.loadAd(BuildConfig.REWARDEDVIDEO_AD_ID, requestAd());
 

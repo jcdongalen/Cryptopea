@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fb="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/main_bg"
     android:fillViewport="true"
     tools:context="com.github.jc.cryptopea.Activities.Login">
 
